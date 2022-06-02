@@ -2,42 +2,48 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 public class PlayerHealth : NetworkBehaviour
 {
     private const float maxhealth = 100f;
-    [SyncVar][SerializeField] public float health = 100f;
+    [SyncVar(hook = "SyncHealth")][SerializeField] public float syncHealth = 100f;
     [SerializeField] Slider healthBarSlider;
-    int score = 0;
-
-    public override void OnStartClient()
+    private void Start()
     {
-        base.OnStartClient();
-
-        SetHealthSlider();
+        healthBarSlider.value = syncHealth / maxhealth;
     }
-    [ClientRpc]
-    private void SetHealthSlider()
+    void SyncHealth(float oldValue, float newValue)
     {
-        healthBarSlider.value = health / maxhealth;
+        healthBarSlider.value = newValue / maxhealth;
     }
 
-    [ClientRpc]
+    [Server]
     internal void ChangeHealthValue(float damage)
     {
-        health -= damage;
-        SetHealthSlider();
-        if (health <= 0)
+        syncHealth -= damage;
+
+        if (syncHealth <= 0)
         {
-            PlayerDie(this.gameObject);
+            PlayerDie(gameObject);
         }
     }
     [Server]
     private void PlayerDie(GameObject player)
     {
-        health = maxhealth;
-        SetHealthSlider();
+        StartCoroutine(SpawnPlayer(player, 2f)); 
+    }
+    [Server]
+    IEnumerator SpawnPlayer(GameObject _player, float delay)
+    {
+
         var newPos = NetworkManager.singleton.GetStartPosition();
-        player.transform.position = newPos.position;
+
+        _player.transform.position = newPos.position; 
+
+        yield return new WaitForSeconds(delay); 
+
+        syncHealth = maxhealth;
+
     }
 }

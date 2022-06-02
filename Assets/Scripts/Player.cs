@@ -15,15 +15,14 @@ public class Player : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-            SetPlayerControlls();
+            SetPlayerControlls();  
             TurnOnCamera();
         }
     }
-   
+
     public override void OnStartClient()
     {
         base.OnStartClient();
-        InputManager.Instance.LockCursor();
     }
     private void TurnOnCamera()
     {

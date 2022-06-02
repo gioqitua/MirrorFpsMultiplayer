@@ -7,8 +7,7 @@ public class ShootSound : NetworkBehaviour
 
     void Start()
     {
-        Destroy(this.gameObject, 1f);
-      
+        Destroy(this.gameObject, 1f); 
     }
 
 }

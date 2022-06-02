@@ -47,11 +47,6 @@ public class InputManager : MonoBehaviour
             playerCamera.DefaultFOV();
         }
     }
-
-    public void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
     public void SetPlayer(Player _player)
     {
         player = _player;
@@ -72,7 +67,7 @@ public class InputManager : MonoBehaviour
 
     private void AnimationHandler()
     {
-         
+
         if (movementDirection.magnitude > 0.05f)
         {
             animator.WalkingAnimation(true);
@@ -85,9 +80,9 @@ public class InputManager : MonoBehaviour
 
     private void MouseInput()
     {
-        xAxis += Input.GetAxisRaw("Mouse X"); 
+        xAxis += Input.GetAxisRaw("Mouse X");
         yAxis -= Input.GetAxisRaw("Mouse Y");
-        yAxis = Mathf.Clamp(yAxis, -80, 80); 
+        yAxis = Mathf.Clamp(yAxis, -80, 80);
         player.CmdSetRotation(xAxis, yAxis);
 
     }

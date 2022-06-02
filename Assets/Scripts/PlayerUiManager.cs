@@ -1,19 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 
 public class PlayerUiManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text OutgoingDamageText;
+    [SerializeField] TMP_Text damageTextPrefab;
+    float textActiveTime = 1f;
 
-
-    public void SetOutGoingDmgText(float dmgTxt)
+    public void CreateDmgText(float damage, Vector3 targetPos, Vector3 shooterPos)
     {
-        OutgoingDamageText.SetText(dmgTxt.ToString());
-      //  StartCoroutine(SetText(dmgTxt));
+        var dmgText = Instantiate(damageTextPrefab, targetPos, Quaternion.LookRotation((targetPos - shooterPos), Vector3.up));
+        dmgText.SetText(damage.ToString());
     }
-
-   
 }
