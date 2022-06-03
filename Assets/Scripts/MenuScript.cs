@@ -1,12 +1,13 @@
 using Mirror;
 using UnityEngine;
 
-public class Menu : NetworkBehaviour
+public class MenuScript : MonoBehaviour
 {
     [SerializeField] NetworkManager networkManager;
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject gamePanel;
-    bool paused = false;
+    bool paused;
+     
     private void Start()
     {
         paused = false;
@@ -56,13 +57,13 @@ public class Menu : NetworkBehaviour
     }
     public void StopGame()
     {
-        if (isServer)
+        if (networkManager.mode == NetworkManagerMode.Host)
         {
-            networkManager.StopServer();
+           networkManager.StopHost();
         }
-        if (isClient)
+        if (networkManager.mode == NetworkManagerMode.ClientOnly)
         {
-            networkManager.StopHost();
+             networkManager.StopClient();
         }
         paused = false;
     }

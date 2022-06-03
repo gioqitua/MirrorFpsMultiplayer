@@ -5,9 +5,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
     [SerializeField] Player player;
-    [SerializeField] PlayerCameraSettings playerCamera;
-    AnimationManager animator;
-    private Vector3 movementDirection;
+    private Vector3 movementDirection = Vector3.zero;
     float xAxis, yAxis;
 
     private void Awake()
@@ -25,57 +23,72 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-
-
         if (!player) return;
+        Debug.Log(player.isGrounded());
 
-        Aim();
+        Jumping();
+
+        IsAiming();
 
         MouseInput();
 
         PlayerMovementInputs();
     }
-
-    private void Aim()
+    public Vector3 Direction()
     {
-        if (Input.GetMouseButton(1))
+        return movementDirection;
+    }
+    public bool IsMoving()
+    {
+        if (movementDirection.magnitude > 0.05) return true;
+        else return false;
+    }
+    public bool IsRunning()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && IsMoving())
         {
-            playerCamera.AimFOV();
+            return true;
         }
         else
         {
-            playerCamera.DefaultFOV();
+            return false;
+        }
+    }
+    public bool Jumping()
+    {
+        if (!player.isGrounded()) return false;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            player.CmdJumpPlayer();
+            return true;
+        }
+        else
+        {
+            // player.CmdApplyGravity();
+            return false;
+        }
+    }
+    public void IsAiming()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            player.camSettings.AimFOV();
+        }
+        else
+        {
+            player.camSettings.DefaultFOV();
         }
     }
     public void SetPlayer(Player _player)
     {
         player = _player;
-        animator = _player.GetComponent<AnimationManager>();
-    }
-    public void SetCamera(PlayerCameraSettings camera)
-    {
-        playerCamera = camera;
     }
     private void PlayerMovementInputs()
     {
         movementDirection.x = Input.GetAxis("Horizontal");
         movementDirection.z = Input.GetAxis("Vertical");
 
-        player.CmdMovePlayer(movementDirection);
-        AnimationHandler();
-    }
-
-    private void AnimationHandler()
-    {
-
-        if (movementDirection.magnitude > 0.05f)
-        {
-            animator.WalkingAnimation(true);
-        }
-        else
-        {
-            animator.WalkingAnimation(false);
-        }
+        player.CmdMovePlayer(movementDirection, IsRunning());
     }
 
     private void MouseInput()

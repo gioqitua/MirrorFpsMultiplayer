@@ -14,6 +14,7 @@ public class PlayerCameraSettings : MonoBehaviour
     {
         this.gameObject.SetActive(true);
     }
+
     public void AimFOV()
     {
         cam.fieldOfView = aimFov;
@@ -22,4 +23,5 @@ public class PlayerCameraSettings : MonoBehaviour
     {
         cam.fieldOfView = defaultFov;
     }
+     
 }

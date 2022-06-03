@@ -1351,8 +1351,9 @@ GameObject:
   - component: {fileID: 7777665482563346112}
   - component: {fileID: 9210505492663852958}
   - component: {fileID: 7777665481074531785}
+  - component: {fileID: 9016232732489745684}
   m_Layer: 0
-  m_Name: PLAYERNew
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1500,10 +1501,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 450
+  speed: 350
+  runningSpeedMultiplier: 1.5
+  jumpForce: 3
   playerCamera: {fileID: 7777665482414293194}
   characterController: {fileID: 3860349680928168754}
   rotationSpeed: 1
+  camSettings: {fileID: 0}
 --- !u!114 &4489796109883342491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,6 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827dc8606ba8f624f84c9638282060f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anime: {fileID: 0}
 --- !u!114 &9210505492663852958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1585,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 7009080938475554347, guid: 57fda56579606ad41bdfb6b1fa38e5c0,
     type: 3}
+--- !u!114 &9016232732489745684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860349680928168764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31e3b67cfc14f8408aa459111a0aeec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animationManager: {fileID: 0}
 --- !u!1 &3870611886814092394
 GameObject:
   m_ObjectHideFlags: 0
