@@ -24,8 +24,7 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (!player) return;
-        Debug.Log(player.isGrounded());
-
+        if (!player.isLocalPlayer) return;
         Jumping();
 
         IsAiming();
@@ -64,7 +63,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            // player.CmdApplyGravity();
             return false;
         }
     }
@@ -82,13 +80,17 @@ public class InputManager : MonoBehaviour
     public void SetPlayer(Player _player)
     {
         player = _player;
+        player.SetInpManager(this);
     }
+
+
+
     private void PlayerMovementInputs()
     {
         movementDirection.x = Input.GetAxis("Horizontal");
         movementDirection.z = Input.GetAxis("Vertical");
 
-        player.CmdMovePlayer(movementDirection, IsRunning());
+        player.MovePlayer(movementDirection, IsRunning());
     }
 
     private void MouseInput()
@@ -96,7 +98,8 @@ public class InputManager : MonoBehaviour
         xAxis += Input.GetAxisRaw("Mouse X");
         yAxis -= Input.GetAxisRaw("Mouse Y");
         yAxis = Mathf.Clamp(yAxis, -80, 80);
-        player.CmdSetRotation(xAxis, yAxis);
+
+        player.SetRotation(xAxis, yAxis);
 
     }
 }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
+    Player player;
     [SerializeField] Animator anime;
-    void Start()
+    internal void SetPlayer(Player _player)
     {
-        anime = GetComponentInChildren<Animator>();
+        player = _player;
+        anime = player.anime;
     }
+
     public void WalkingAnimation(bool condition)
     {
         anime.SetBool("Walking", condition);

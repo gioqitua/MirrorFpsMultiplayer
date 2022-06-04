@@ -11,19 +11,23 @@ public class PlayerFSM : NetworkBehaviour
     public RunningState runningState = new RunningState();
     internal InputManager inputManager;
     internal PlayerCameraSettings playerCamera;
-
-    private void Start()
+    Player player;
+    internal void SetPlayer(Player _player)
     {
-        animationManager = GetComponent<AnimationManager>();
+        player = _player;
 
-        inputManager = InputManager.Instance;
+        animationManager = player.animationManager;
 
-        playerCamera = GetComponentInChildren<PlayerCameraSettings>();
+        inputManager = player.inputManager;
+
+        playerCamera = player.camSettings;
 
         SwitchState(idleState);
     }
+
     private void Update()
     {
+        if (!player) return;
         if (!isLocalPlayer) return;
 
         if (inputManager.Jumping()) SwitchState(jumpingState);

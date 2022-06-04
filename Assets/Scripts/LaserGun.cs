@@ -54,9 +54,8 @@ public class LaserGun : NetworkBehaviour
 
         if (Physics.Raycast(ray, out hit, shootingDistance))
         {
-            PlayerHealth target = hit.transform.GetComponent<PlayerHealth>();
-            aim.transform.position = hit.point; //virtual aim, just for animations
-            Debug.Log(hit.transform.gameObject.name);
+            PlayerHealth target = hit.collider.gameObject.GetComponent<PlayerHealth>();
+            aim.transform.position = hit.point; //virtual aim, just for animations 
 
             if (target) //if hit 
             {
@@ -97,9 +96,16 @@ public class LaserGun : NetworkBehaviour
 
     private void DealDamage(float damage, RaycastHit hit, PlayerHealth target)
     {
-
         target.ChangeHealthValue(damage);
         var particle = Instantiate(hitParticle, hit.point, Quaternion.identity);
+        NetworkServer.Spawn(particle);
+    }
+    [Command]
+    private void CmdDealDamage(Vector3 point, PlayerHealth player, float damage)
+    {
+        player.ChangeHealthValue(damage);
+
+        var particle = Instantiate(hitParticle, point, Quaternion.identity);
         NetworkServer.Spawn(particle);
     }
 
@@ -111,14 +117,6 @@ public class LaserGun : NetworkBehaviour
         NetworkServer.Spawn(particle);
     }
 
-    [Command]
-    private void CmdDealDamage(Vector3 point, PlayerHealth player, float damage)
-    {
-        player.ChangeHealthValue(damage);
-
-        var particle = Instantiate(hitParticle, point, Quaternion.identity);
-        NetworkServer.Spawn(particle);
-    }
 
     [Command]
     private void CmdBulletSound()

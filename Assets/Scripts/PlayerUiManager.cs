@@ -4,7 +4,7 @@ using TMPro;
 public class PlayerUiManager : MonoBehaviour
 {
     [SerializeField] TMP_Text damageTextPrefab;
-    float textActiveTime = 1f;
+    
 
     public void CreateDmgText(float damage, Vector3 targetPos, Vector3 shooterPos)
     {

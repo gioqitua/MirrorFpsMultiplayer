@@ -1503,7 +1503,7 @@ MonoBehaviour:
   syncInterval: 0.1
   speed: 350
   runningSpeedMultiplier: 1.5
-  jumpForce: 3
+  jumpForce: 1
   playerCamera: {fileID: 7777665482414293194}
   characterController: {fileID: 3860349680928168754}
   rotationSpeed: 1
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
