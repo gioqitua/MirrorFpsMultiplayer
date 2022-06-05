@@ -6,7 +6,7 @@ public class Player : NetworkBehaviour
 {
     [SyncVar][SerializeField] private float speed = 350f;
     [SyncVar][SerializeField] float runningSpeedMultiplier = 1.5f;
-    [SyncVar][SerializeField] float jumpForce = 1f;
+    [SyncVar][SerializeField] float jumpForce = 3f;
     [SerializeField] public Camera playerCamera;
     [SerializeField] CharacterController characterController;
     [SerializeField] float rotationSpeed = 1f;
@@ -17,17 +17,7 @@ public class Player : NetworkBehaviour
     internal InputManager inputManager;
     internal PlayerFSM playerFSM;
 
-    internal bool isGrounded()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, distanceToGround))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+
     public override void OnStartClient()
     {
         characterController = GetComponent<CharacterController>();
@@ -48,7 +38,17 @@ public class Player : NetworkBehaviour
             playerFSM.SetPlayer(this);
         }
     }
-
+    public bool isGrounded()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, distanceToGround))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void TurnOnCamera()
     {
         var cameraSettings = playerCamera.GetComponent<PlayerCameraSettings>();
@@ -95,4 +95,5 @@ public class Player : NetworkBehaviour
 
         playerCamera.transform.localRotation = Quaternion.Euler(xAxis * rotationSpeed, 0, 0);
     }
+
 }

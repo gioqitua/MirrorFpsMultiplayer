@@ -28,5 +28,6 @@ public class AnimationManager : MonoBehaviour
     {
         anime.SetTrigger("Jump");
     }
+    
 
 }
