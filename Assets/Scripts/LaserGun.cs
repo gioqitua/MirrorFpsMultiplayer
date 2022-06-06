@@ -1,10 +1,12 @@
 using UnityEngine;
 using Mirror;
+using System.Collections;
 
 public class LaserGun : NetworkBehaviour
 {
     [SerializeField] Transform bulletStartPos;
     [SerializeField] Transform bulletDirection;
+    [SerializeField] Transform bulletShellPos;
     [SerializeField] float _shootingDelay = 0.1f;
     [SerializeField] GameObject hitParticle;
     [SerializeField] GameObject missParticle;
@@ -12,15 +14,16 @@ public class LaserGun : NetworkBehaviour
     [SerializeField] GameObject shootSound;
     [SerializeField] PlayerUiManager uiManager;
     [SerializeField] GameObject aim;
+    [SerializeField] GameObject bulletShell;
     float shootingDistance = 200f;
     private float _nextShootTime;
+    AnimationManager animationManager;
 
     private void Start()
     {
         uiManager = GetComponent<PlayerUiManager>();
+        animationManager = GetComponent<AnimationManager>();
     }
-
-
     private void Update()
     {
         if (isLocalPlayer && Input.GetMouseButton(0) && CheckIfCanSHoot())
@@ -28,10 +31,7 @@ public class LaserGun : NetworkBehaviour
             Shoot();
             _nextShootTime = Time.time + _shootingDelay;
         }
-    }
-
-
-
+    } 
     bool CheckIfCanSHoot()
     {
         return Time.time >= _nextShootTime;
@@ -40,9 +40,13 @@ public class LaserGun : NetworkBehaviour
     [Client]
     private void Shoot()
     {
+        animationManager.FireAnimation();
+
         CmdBulletSound();
 
         CmdMuzzleFlashParticle();
+
+        CmdBulletShellParticle();
 
         float damage = Random.Range(8, 12);
 
@@ -77,11 +81,32 @@ public class LaserGun : NetworkBehaviour
                 CmdMissParticle(hit.point);
             }
         }
+
     }
+
+    [Command]
+    private void CmdBulletShellParticle()
+    {
+        var newBulletShell = Instantiate(bulletShell, bulletShellPos.position, Quaternion.identity);
+
+        newBulletShell.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Impulse);
+
+        NetworkServer.Spawn(newBulletShell);
+
+        StartCoroutine(DestroyShells(newBulletShell));
+
+    }
+    [Server]
+    IEnumerator DestroyShells(GameObject shell)
+    {
+        yield return new WaitForSeconds(2f);
+
+        Destroy(shell);
+    }
+
     [Command]
     private void CmdMuzzleFlashParticle()
     {
-
         var particle = Instantiate(muzzlefleshParticle, bulletStartPos.position, Quaternion.identity);
 
         NetworkServer.Spawn(particle);

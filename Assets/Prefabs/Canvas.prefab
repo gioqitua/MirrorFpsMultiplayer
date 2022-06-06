@@ -541,8 +541,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f85c2b9fd1f76d41963b6623b5cb2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   networkManager: {fileID: 0}
   menuPanel: {fileID: 2376685166855312473}
   gamePanel: {fileID: 2376685168065234568}

@@ -14,7 +14,7 @@ public class AnimationManager : MonoBehaviour
 
     public void WalkingAnimation(bool condition)
     {
-        anime.SetBool("Walking", condition);
+        anime.SetBool("Walk", condition);
     }
     public void IdleAnimation(bool condition)
     {
@@ -22,12 +22,16 @@ public class AnimationManager : MonoBehaviour
     }
     public void RunningAnimation(bool condition)
     {
-        anime.SetBool("Running", condition);
+        anime.SetBool("Run", condition);
     }
     public void JumpingAnimation()
     {
         anime.SetTrigger("Jump");
     }
-    
+    public void FireAnimation()
+    { 
+        anime.SetTrigger("Shoot"); 
+    }
+
 
 }
