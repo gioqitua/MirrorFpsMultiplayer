@@ -612,7 +612,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 60
   offlineScene: Assets/Scenes/Menu.unity
-  onlineScene: Assets/Scenes/Game.unity
+  onlineScene: 
   transport: {fileID: 2716343411400970157}
   networkAddress: localhost
   maxConnections: 10
@@ -627,6 +627,7 @@ MonoBehaviour:
   - {fileID: 613433886817584986, guid: 9f5fbcfb6299c2b4c912f3ff44f14463, type: 3}
   - {fileID: 2582845509961668623, guid: 0f80f2150412f044c8d4d4380a2989fd, type: 3}
   - {fileID: 947269175009299189, guid: 592a3a8fb82450c4e982308d470f1b86, type: 3}
+  - {fileID: 4157591189432888785, guid: 45268af9a88f3c748bb976866c91092a, type: 3}
 --- !u!114 &2716343411400970157
 MonoBehaviour:
   m_ObjectHideFlags: 0

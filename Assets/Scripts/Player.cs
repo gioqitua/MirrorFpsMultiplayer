@@ -4,9 +4,9 @@ using System;
 
 public class Player : NetworkBehaviour
 {
-    [SyncVar][SerializeField] private float speed = 350f;
+    [SyncVar][SerializeField] private float speed = 200f;
     [SyncVar][SerializeField] float runningSpeedMultiplier = 1.5f;
-    [SyncVar][SerializeField] float jumpForce = 3f;
+    [SyncVar][SerializeField] float jumpForce = 1f;
     [SerializeField] public Camera playerCamera;
     [SerializeField] CharacterController characterController;
     [SerializeField] float rotationSpeed = 1f;

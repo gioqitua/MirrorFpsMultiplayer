@@ -1,12 +1,12 @@
 using UnityEngine;
 using Mirror;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class PlayerHealth : NetworkBehaviour
 {
     private const float maxhealth = 100f;
-    [SyncVar(hook = "SyncHealth")][SerializeField] public float syncHealth = 100f; 
-    [SerializeField] Slider healthBarSlider;
+    [SyncVar(hook = "SyncHealth")][SerializeField] public float syncHealth = 100f;
+    [SerializeField] Slider healthBarSlider; 
     private void Start()
     {
         healthBarSlider.value = syncHealth / maxhealth;

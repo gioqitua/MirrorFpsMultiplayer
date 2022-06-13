@@ -1,6 +1,6 @@
 using UnityEngine;
 using Mirror;
-using System.Collections;
+using System.Collections; 
 
 public class LaserGun : NetworkBehaviour
 {
@@ -15,7 +15,7 @@ public class LaserGun : NetworkBehaviour
     [SerializeField] PlayerUiManager uiManager;
     [SerializeField] GameObject aim;
     [SerializeField] GameObject bulletShell;
-    float shootingDistance = 200f;
+    float shootingDistance = 20000f;
     private float _nextShootTime;
     AnimationManager animationManager;
 
