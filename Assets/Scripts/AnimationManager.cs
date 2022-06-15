@@ -29,9 +29,12 @@ public class AnimationManager : MonoBehaviour
         anime.SetTrigger("Jump");
     }
     public void FireAnimation()
-    { 
-        anime.SetTrigger("Shoot"); 
+    {
+        anime.SetTrigger("Shoot");
     }
-
+    public void Reload()
+    {
+        anime.SetTrigger("Reload");
+    }
 
 }

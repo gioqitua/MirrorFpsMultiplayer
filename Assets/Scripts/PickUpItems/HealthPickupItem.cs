@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class HealthPickupItem : PickUpItem
 {
-    float healthToAdd = 30f;
+    float healthToAdd = 35f; 
 
-    
     private void OnTriggerEnter(Collider other)
     {
         var player = other.gameObject.GetComponent<Player>();
-        if (player)
-        {
-            if (player.isLocalPlayer)
-            {
-                var PlayerHealth = player.GetComponent<PlayerHealth>();
-                NewMethod(PlayerHealth);
-                Debug.Log("you pickup item");
-                NetworkServer.Destroy(this.gameObject);
 
-            }
+        var PlayerHealth = player.GetComponent<PlayerHealth>();
+
+        if (player.isServer)
+        {
+            PlayerHealth.ChangeHealthValue(-healthToAdd);
+
+            NetworkServer.Destroy(this.gameObject);
+
+            Debug.Log("you pickup item"); 
+
         }
+        else if (player.isClientOnly)
+        {
+            AddHealth(PlayerHealth);
+            Debug.Log("you pickup item");
+        }
+
     }
     [Command]
-    private void NewMethod(PlayerHealth PlayerHealth)
+    private void AddHealth(PlayerHealth PlayerHealth)
     {
         PlayerHealth.ChangeHealthValue(-healthToAdd);
+        NetworkServer.Destroy(this.gameObject);
     }
 }

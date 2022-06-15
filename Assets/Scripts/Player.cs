@@ -17,9 +17,9 @@ public class Player : NetworkBehaviour
     internal InputManager inputManager;
     internal PlayerFSM playerFSM;
 
-
     public override void OnStartClient()
     {
+
         characterController = GetComponent<CharacterController>();
 
         camSettings = playerCamera.GetComponent<PlayerCameraSettings>();
